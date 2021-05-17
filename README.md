@@ -151,3 +151,46 @@ example - `GET https://api.babbl.dev/v1/timeseries_sentiment?key=<ur key>&ticker
   }
 }
 ```
+
+
+### `GET top_movers/`
+*Gets top and bottom 3 moving tickers WRT sentiment metrics.*
+
+*__IMPORTANT__: This takes a long time to run as we're calculating this from scratch, patience is a virtue!*
+
+**Args**\
+key - Your API key\
+
+example - `GET https://api.babbl.dev/v1/top_movers?key=<ur key>`
+```json
+{
+  "bottom": [
+    {
+      "movement": -4.168238781426008,
+      "ticker": "PLTR"
+    },
+    {
+      "movement": -4.072343430805002,
+      "ticker": "AAPL"
+    },
+    {
+      "movement": -3.4334559663293094,
+      "ticker": "ARKK"
+    }
+  ],
+  "top": [
+    {
+      "movement": -0.0700748978862486,
+      "ticker": "SHOP"
+    },
+    {
+      "movement": 0.5104262714593898,
+      "ticker": "PTON"
+    },
+    {
+      "movement": 0.8472847911749006,
+      "ticker": "MSFT"
+    }
+  ]
+}
+```
