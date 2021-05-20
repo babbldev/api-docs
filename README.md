@@ -194,3 +194,45 @@ example - `GET https://api.babbl.dev/v1/top_movers?key=<ur key>`
   ]
 }
 ```
+
+### `GET top_volume_movers/`
+*Gets top and bottom 3 moving tickers WRT Article Volume. Returns % Change.*
+
+*__IMPORTANT__: This, too, takes a long time to run as we're calculating this from scratch --> patience is a virtue!*
+
+**Args**\
+key - Your API key\
+
+example - `GET https://api.babbl.dev/v1/top_volume_movers?key=<ur key>`
+```json
+{
+  "bottom": [
+    {
+      "ticker": "PTON",
+      "volume_change": -0.901
+    },
+    {
+      "ticker": "PLTR",
+      "volume_change": -0.8411764705882353
+    },
+    {
+      "ticker": "AAPL",
+      "volume_change": -0.7670212765957447
+    }
+  ],
+  "top": [
+    {
+      "ticker": "TSLA",
+      "volume_change": 0.4397590361445783
+    },
+    {
+      "ticker": "SNDL",
+      "volume_change": 0.6
+    },
+    {
+      "ticker": "NVDA",
+      "volume_change": 2.5
+    }
+  ]
+}
+```
