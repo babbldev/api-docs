@@ -49,6 +49,46 @@ example - `GET https://api.babbl.dev/v1/get_articles?key=<your key>&tickers=SHOP
 }
 ```
 
+### *Amended* `GET v1-1/get_articles/`
+*Gets articles with sentiment info for the requested ticker(s), formatted to return as list of article objects*
+
+**Args**\
+key - Your API key\
+tickers - Comma-separated tickers\
+*limit* - (Optional, default 10) limit of articles to return for each ticker\
+
+example - `GET https://api.babbl.dev/v1-1/get_articles?key=<your key>&tickers=PLTR,NVDA&limit=1`
+```json                                                                                                                                      
+[
+  {
+    "entities": "PLTR", 
+    "main_ticker": "PLTR",
+    "optimism": 0.0,
+    "pessimism": 0.0,
+    "reactive": 0.0,
+    "speculative": 12.5,
+    "timestamp": "2021-05-24",
+    "title": "Palantir Technologies Strikes $32.5M Deal With US Air Force | Benzinga",
+    "url": "https://cloud.iexapis.com/v1/news/article/16c0f337-0081-449d-842b-ab33562c310e",
+    "x_graph": 10.141261811587285,
+    "y_graph": 0.0
+  },
+  {
+    "entities": "BBY, TOL, VIX, OKTA, NVDA, COST",
+    "main_ticker": "NVDA",
+    "optimism": 19.05,
+    "pessimism": 9.52,
+    "reactive": 9.52,
+    "speculative": 114.29,
+    "timestamp": "2021-05-24",
+    "title": "Expected Moves This Week: Nvidia, Salesforce, Snowflake, Costco, Bitcoin And More | Benzinga",
+    "url": "https://cloud.iexapis.com/v1/news/article/4f611e48-f16d-4aa5-8fc0-af0473ddc85a",
+    "x_graph": 85.0,
+    "y_graph": 85.0
+  }
+]
+```
+
 ### `GET populated_tickers/`
 *See which tickers currently have been populated in all tables, i.e. which tickers are supported*
 
@@ -126,6 +166,41 @@ example - `GET https://api.babbl.dev/v1/ticker_snippets?key=<ur key>&tickers=AAP
     "snippets": []
   }
 }
+```
+
+### *Amended* `GET v1-1/ticker_snippets/`
+*Gets raw snippets with sentiment info for the requested ticker(s). Amended to return as a list of snippet objects.*
+
+**Args**\
+key - Your API key\
+tickers - Comma-separated tickers\
+*days* - (Optional, default 10) look-back range for days to pull snippets\
+*max* - (Optional, default 10) maximum snippets to return for each ticker
+
+example - `GET https://api.babbl.dev/v1-1/ticker_snippets?key=<ur key>&tickers=PLTR,NVDA&max=1`
+```json
+[
+  {
+    "optimistic": 1.0,
+    "pessimistic": 0.0,
+    "reactive": 1.0,
+    "speculative": 0.0,
+    "text": "Meme stock rally \u2013 GME, AMC, PLTR and MVIS:\nChart prepared by Warren Venketas, Refinitiv\n--- Written by Warren Venketas for DailyFX.com\nContact and follow Warren on Twitter: @WVenketas\nDailyFX provides forex news and technical analysis on the trends that influence the global currency markets.",
+    "main_ticker": "PLTR",
+    "timestamp": "2021-05-27",
+    "title": "Bitcoin (BTC), Gold, Gamestop (GME) & AMC \u2013 FinTwit Trends to Watch | DailyFX"
+  },
+  {
+    "optimistic": 1.0,
+    "pessimistic": 1.0,
+    "reactive": 0.0,
+    "speculative": 1.0,
+    "text": "Directional Spreads\nHere are bearish credit call spread examples in NVDA based on the expected move (better thought of as \u201cnot bullish\u201d:\n\n\u00a0\nAnd here are bullish credit put spread examples in NVDA, based on the expected move (better thought of as \u201cnot bearish\u201d:\n\nOptions AI puts the expected move at the heart of its trading platform.",
+    "main_ticker": "NVDA",
+    "timestamp": "2021-05-26",
+    "title": "Wednesday Earnings. NVIDIA, Snowflake: Expected Moves And Trading With Credit Spreads | Benzinga"
+  }
+]
 ```
 
 ### `GET timeseries_sentiment/`
