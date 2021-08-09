@@ -4,12 +4,62 @@
 
 ---
 
+## Contents
+
+- Endpoints
+- Statuses
+- Authentication
+
+---
+
 ## Endpoints
 
 > All endpoints are prefixed by https://api.babbl.dev/v1/
 
 ### `GET status/`
 Test endpoint to check availibility of this server
+
+
+### `GET get_articles/`
+*Gets articles with sentiment info for the requested ticker(s), formatted to return as list of article objects*
+
+**Args**\
+key - Your API key\
+tickers - Comma-separated tickers\
+*limit* - (Optional, default 10) limit of articles to return for each ticker\
+
+example - `GET https://api.babbl.dev/v1-1/get_articles?key=<your key>&tickers=PLTR,NVDA&limit=1`
+```json                                                                                                                                      
+[
+  {
+    "entities": "PLTR", 
+    "main_ticker": "PLTR",
+    "optimism": 0.0,
+    "pessimism": 0.0,
+    "reactive": 0.0,
+    "speculative": 12.5,
+    "timestamp": "2021-05-24",
+    "title": "Palantir Technologies Strikes $32.5M Deal With US Air Force | Benzinga",
+    "url": "https://cloud.iexapis.com/v1/news/article/16c0f337-0081-449d-842b-ab33562c310e",
+    "x_graph": 10.141261811587285,
+    "y_graph": 0.0
+  },
+  {
+    "entities": "BBY, TOL, VIX, OKTA, NVDA, COST",
+    "main_ticker": "NVDA",
+    "optimism": 19.05,
+    "pessimism": 9.52,
+    "reactive": 9.52,
+    "speculative": 114.29,
+    "timestamp": "2021-05-24",
+    "title": "Expected Moves This Week: Nvidia, Salesforce, Snowflake, Costco, Bitcoin And More | Benzinga",
+    "url": "https://cloud.iexapis.com/v1/news/article/4f611e48-f16d-4aa5-8fc0-af0473ddc85a",
+    "x_graph": 85.0,
+    "y_graph": 85.0
+  }
+]
+```
+
 
 ### `GET get_articles/`
 *Gets articles with sentiment info for the requested ticker(s)*
@@ -49,45 +99,6 @@ example - `GET https://api.babbl.dev/v1/get_articles?key=<your key>&tickers=SHOP
 }
 ```
 
-### *Amended* `GET v1-1/get_articles/`
-*Gets articles with sentiment info for the requested ticker(s), formatted to return as list of article objects*
-
-**Args**\
-key - Your API key\
-tickers - Comma-separated tickers\
-*limit* - (Optional, default 10) limit of articles to return for each ticker\
-
-example - `GET https://api.babbl.dev/v1-1/get_articles?key=<your key>&tickers=PLTR,NVDA&limit=1`
-```json                                                                                                                                      
-[
-  {
-    "entities": "PLTR", 
-    "main_ticker": "PLTR",
-    "optimism": 0.0,
-    "pessimism": 0.0,
-    "reactive": 0.0,
-    "speculative": 12.5,
-    "timestamp": "2021-05-24",
-    "title": "Palantir Technologies Strikes $32.5M Deal With US Air Force | Benzinga",
-    "url": "https://cloud.iexapis.com/v1/news/article/16c0f337-0081-449d-842b-ab33562c310e",
-    "x_graph": 10.141261811587285,
-    "y_graph": 0.0
-  },
-  {
-    "entities": "BBY, TOL, VIX, OKTA, NVDA, COST",
-    "main_ticker": "NVDA",
-    "optimism": 19.05,
-    "pessimism": 9.52,
-    "reactive": 9.52,
-    "speculative": 114.29,
-    "timestamp": "2021-05-24",
-    "title": "Expected Moves This Week: Nvidia, Salesforce, Snowflake, Costco, Bitcoin And More | Benzinga",
-    "url": "https://cloud.iexapis.com/v1/news/article/4f611e48-f16d-4aa5-8fc0-af0473ddc85a",
-    "x_graph": 85.0,
-    "y_graph": 85.0
-  }
-]
-```
 
 ### `GET populated_tickers/`
 *See which tickers currently have been populated in all tables, i.e. which tickers are supported*
@@ -169,7 +180,7 @@ example - `GET https://api.babbl.dev/v1/ticker_snippets?key=<ur key>&tickers=AAP
 ```
 
 ### *Amended* `GET v1-1/ticker_snippets/`
-*Gets raw snippets with sentiment info for the requested ticker(s). Amended to return as a list of snippet objects.*
+*Gets raw snippets with sentiment info for the requested ticker(s)*
 
 **Args**\
 key - Your API key\
@@ -228,86 +239,62 @@ example - `GET https://api.babbl.dev/v1/timeseries_sentiment?key=<ur key>&ticker
 ```
 
 
-### `GET top_movers/`
-*Gets top and bottom 3 moving tickers WRT sentiment metrics.*
+## User Management Section
 
-*__IMPORTANT__: This takes a long time to run as we're calculating this from scratch, patience is a virtue!*
+*Endpoints dealing with managing User Accounts*
 
-**Args**\
-key - Your API key\
-
-example - `GET https://api.babbl.dev/v1/top_movers?key=<ur key>`
-```json
-{
-  "bottom": [
-    {
-      "movement": -4.168238781426008,
-      "ticker": "PLTR"
-    },
-    {
-      "movement": -4.072343430805002,
-      "ticker": "AAPL"
-    },
-    {
-      "movement": -3.4334559663293094,
-      "ticker": "ARKK"
-    }
-  ],
-  "top": [
-    {
-      "movement": -0.0700748978862486,
-      "ticker": "SHOP"
-    },
-    {
-      "movement": 0.5104262714593898,
-      "ticker": "PTON"
-    },
-    {
-      "movement": 0.8472847911749006,
-      "ticker": "MSFT"
-    }
-  ]
-}
-```
-
-### `GET top_volume_movers/`
-*Gets top and bottom 3 moving tickers WRT Article Volume. Returns % Change.*
-
-*__IMPORTANT__: This, too, takes a long time to run as we're calculating this from scratch --> patience is a virtue!*
+###   `POST v1/watchlist_addition/`
+*Adds a single ticker to a user's watchlist*
 
 **Args**\
 key - Your API key\
+uname - User's ID\
+tick - Ticker to add to watchlist\
 
-example - `GET https://api.babbl.dev/v1/top_volume_movers?key=<ur key>`
+**Important**\
+Returns HTTP 418 if user is already at their maximum watchlist size.\
+Returns HTTP 200 on success.
+
+example - `POST https://api.babbl.dev/v1/watchlist_addition`\
+ARGS:
 ```json
 {
-  "bottom": [
-    {
-      "ticker": "PTON",
-      "volume_change": -0.901
-    },
-    {
-      "ticker": "PLTR",
-      "volume_change": -0.8411764705882353
-    },
-    {
-      "ticker": "AAPL",
-      "volume_change": -0.7670212765957447
-    }
-  ],
-  "top": [
-    {
-      "ticker": "TSLA",
-      "volume_change": 0.4397590361445783
-    },
-    {
-      "ticker": "SNDL",
-      "volume_change": 0.6
-    },
-    {
-      "ticker": "NVDA",
-      "volume_change": 2.5
-    }
-  ]
+  "key": "<ur key>",
+  "uname": "<alphanum User ID>",
+  "tick": "<Ticker to be added>"
 }
 ```
+Response(s):\
+HTTP 200 -- Success\
+HTTP 400 -- Malformed Request, Missing required Arg\
+HTTP 403 -- Access Denied, API Key\
+HTTP 418 -- Action wasn't performed, User at max Watchlist items already
+
+###   `POST v1/watchlist_delete/`
+*Removes a single ticker from a user's watchlist*
+
+**Args**\
+key - Your API key\
+uname - User's ID\
+tick - Ticker to remove from watchlist\
+
+**Important**\
+Returns HTTP 200 on success, not currently catching attempting to delete
+a non-existent ticker for a given user. Also currently would delete duplicate
+tickers for a user, e.g. if a user has 2 TSLA's in their watchlist, this 
+would delete both.
+
+example - `POST https://api.babbl.dev/v1/watchlist_delete`\
+ARGS:
+```json
+{
+  "key": "<ur key>",
+  "uname": "<alphanum User ID>",
+  "tick": "<Ticker to be added>"
+}
+```
+Response(s):\
+HTTP 200 -- Success\
+HTTP 400 -- Malformed Request, Missing required Arg\
+HTTP 403 -- Access Denied, API Key\
+
