@@ -27,6 +27,10 @@ Test endpoint to check availibility of this server
 key - Your API key\
 tickers - Comma-separated tickers\
 *limit* - (Optional, default 10) limit of articles to return for each ticker\
+*days* - (Optional, default 14) number of days to look back for articles
+
+**Important**\
+Backend will default to lower article count of articles between limit and days if both are provided.
 
 example - `GET https://api.babbl.dev/v1-1/get_articles?key=<your key>&tickers=PLTR,NVDA&limit=1`
 ```json                                                                                                                                      
